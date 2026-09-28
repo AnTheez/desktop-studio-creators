@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/AnTheez/desktop-studio-creators/schemas/widget-manifest.schema.json",
+  "title": "Desktop Studio DOM Widget Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "formatVersion",
+    "id",
+    "type",
+    "name",
+    "version",
+    "entryPoint",
+    "defaultSize"
+  ],
+  "properties": {
+    "formatVersion": { "const": 1 },
+    "id": { "type": "string", "minLength": 3, "maxLength": 128, "pattern": "^[a-z0-9]+(?:[._-][a-z0-9]+)+$" },
+    "type": { "const": "widget" },
+    "name": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "version": { "type": "integer", "minimum": 1 },
+    "entryPoint": { "$ref": "#/$defs/relativePath" },
+    "defaultSize": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["width", "height"],
+      "properties": {
+        "width": { "type": "number", "exclusiveMinimum": 0, "maximum": 8192 },
+        "height": { "type": "number", "exclusiveMinimum": 0, "maximum": 8192 }
+      }
+    },
+    "preview": { "$ref": "#/$defs/relativePath" },
+    "settings": { "$ref": "#/$defs/relativePath" },
+    "runtime": { "enum": ["dom"] },
+    "permissions": {
+      "type": "array",
+      "maxItems": 16,
+      "uniqueItems": true,
+      "items": { "enum": ["audio", "systemMetrics", "input", "network", "storage"] }
+    },
+    "properties": {
+      "type": "object",
+      "maxProperties": 100,
+      "propertyNames": { "minLength": 1, "maxLength": 64 },
+      "additionalProperties": { "$ref": "#/$defs/property" }
+    },
+    "animations": {},
+    "behavior": {},
+    "stateMachine": {}
+  },
+  "$defs": {
+    "relativePath": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 260,
+      "not": { "pattern": "(^[A-Za-z]:)|(^[/\\\\])|(^|[/\\\\])\\.\\.([/\\\\]|$)" }
+    },
+    "property": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type"],
+      "properties": {
+        "type": { "enum": ["slider", "color", "boolean", "number", "text", "select"] },
+        "default": {},
+        "label": { "type": "string", "maxLength": 128 },
+        "min": { "type": "number" },
+        "max": { "type": "number" },
+        "step": { "type": "number", "exclusiveMinimum": 0 },
+        "options": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 100,
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    }
+  }
+}
+

@@ -1,0 +1,36 @@
+{
+  "formatVersion": 1,
+  "id": "antheez.hello-widget",
+  "type": "widget",
+  "name": "Hello Widget",
+  "version": 1,
+  "entryPoint": "index.html",
+  "defaultSize": {
+    "width": 360,
+    "height": 180
+  },
+  "settings": "settings.json",
+  "runtime": "dom",
+  "permissions": [],
+  "properties": {
+    "title": {
+      "type": "text",
+      "default": "Hello desktop",
+      "label": "Title"
+    },
+    "accent": {
+      "type": "color",
+      "default": "#9d8cff",
+      "label": "Accent"
+    },
+    "cornerRadius": {
+      "type": "slider",
+      "default": 24,
+      "label": "Corner radius",
+      "min": 0,
+      "max": 60,
+      "step": 1
+    }
+  }
+}
+

@@ -1,0 +1,8 @@
+node_modules/
+dist/
+*.log
+*.dscomponent
+*.dsproject
+.DS_Store
+Thumbs.db
+

@@ -17,6 +17,8 @@ and keep ownership of what you make.
 
 </div>
 
+![Desktop Studio Creator Kit — modular desktop customization workspace](docs/assets/creator-hero.png)
+
 > [!IMPORTANT]
 > **The ecosystem is open; the host application is paid.** This repository contains the
 > public creator contract, schemas, examples, and tools. It does not license or distribute
@@ -51,6 +53,14 @@ Reserved capabilities remain clearly marked instead of silently becoming unstabl
 
 The long-term goal is a healthy creator ecosystem: open formats and tools, a paid polished
 host, free community creations, and room for creators to publish premium work later.
+
+## From idea to desktop
+
+![Creator workflow: design, build, validate, and run](docs/assets/creator-workflow.png)
+
+The workflow stays intentionally simple: design the experience, build it from portable
+parts, validate the package, then preview it inside Desktop Studio. The validator and public
+contract catch unsafe or incompatible content before it reaches a user's desktop.
 
 ## Your first widget
 

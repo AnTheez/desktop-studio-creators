@@ -1,0 +1,154 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Desktop Studio bounded effect definition v1",
+  "type": "object",
+  "properties": {
+    "formatVersion": {
+      "const": 1
+    },
+    "properties": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "effectVersion": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 1
+        },
+        "generator": {
+          "enum": [
+            "rain",
+            "snow",
+            "fog"
+          ]
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "density": {
+          "type": "number",
+          "minimum": 0.02,
+          "maximum": 1
+        },
+        "alpha": {
+          "type": "number",
+          "minimum": 0.05,
+          "maximum": 1
+        },
+        "speed": {
+          "type": "number",
+          "minimum": 0.1,
+          "maximum": 3
+        },
+        "wind": {
+          "type": "number",
+          "minimum": -2,
+          "maximum": 2
+        },
+        "turbulence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "size": {
+          "type": "number",
+          "minimum": 0.3,
+          "maximum": 3
+        },
+        "depth": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "focus": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "shutter": {
+          "type": "number",
+          "minimum": 0.02,
+          "maximum": 1
+        },
+        "color": {
+          "type": "string",
+          "pattern": "^#[0-9a-fA-F]{6}$"
+        },
+        "color2": {
+          "type": "string",
+          "pattern": "^#[0-9a-fA-F]{6}$"
+        },
+        "lightIntensity": {
+          "type": "number",
+          "minimum": 0.1,
+          "maximum": 3
+        },
+        "lightX": {
+          "type": "number",
+          "minimum": -1,
+          "maximum": 1
+        },
+        "lightY": {
+          "type": "number",
+          "minimum": -1,
+          "maximum": 1
+        },
+        "fogHeight": {
+          "type": "number",
+          "minimum": 0.1,
+          "maximum": 1
+        },
+        "fogDetail": {
+          "type": "number",
+          "minimum": 0.3,
+          "maximum": 3
+        },
+        "region": {
+          "enum": [
+            "rectangle",
+            "ellipse"
+          ]
+        },
+        "edgeSoftness": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 0.5
+        },
+        "fadeTop": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "fadeBottom": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "seed": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 999999
+        },
+        "fps": {
+          "enum": [
+            "15",
+            "30",
+            "60"
+          ]
+        },
+        "quality": {
+          "enum": [
+            "eco",
+            "balanced",
+            "high"
+          ]
+        }
+      }
+    }
+  },
+  "required": [
+    "formatVersion",
+    "properties"
+  ],
+  "additionalProperties": true
+}

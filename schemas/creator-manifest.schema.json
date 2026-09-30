@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Desktop Studio creator ZIP manifest v1",
+  "oneOf": [
+    {
+      "$ref": "widget-manifest.schema.json"
+    },
+    {
+      "$ref": "media-manifest.schema.json"
+    },
+    {
+      "$ref": "companion-manifest.schema.json"
+    },
+    {
+      "$ref": "3d-manifest.schema.json"
+    }
+  ]
+}

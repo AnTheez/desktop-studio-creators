@@ -13,7 +13,7 @@ and keep ownership of what you make.
 ![Offline first](https://img.shields.io/badge/runtime-offline_first-2f81f7?style=flat-square)
 ![Native code](https://img.shields.io/badge/native_binaries-blocked-f85149?style=flat-square)
 
-[Start creating](#your-first-widget) · [Widget format](docs/WIDGET-FORMAT.md) · [Example](examples/hello-widget) · [Contribute](CONTRIBUTING.md)
+[Start creating](#your-first-package) · [ZIP package guide](docs/ZIP-PACKAGES.md) · [Widget format](docs/WIDGET-FORMAT.md) · [Examples](examples) · [Contribute](CONTRIBUTING.md)
 
 </div>
 
@@ -32,12 +32,15 @@ permissions, provenance, and version — while the host keeps installation and r
 
 | Create | What it can become | Creator Kit status |
 | --- | --- | --- |
-| **DOM Widgets** | Clocks, notes, meters, calendars, focus tools, visualizers | Available now |
-| **Complete themes** | Coordinated wallpapers, widgets, effects, sounds, and cursors | Contract in development |
-| **Wallpapers** | Image, GIF, video, and safe local web scenes | Contract in development |
+| **DOM Widgets** | Local HTML, CSS, and JavaScript with editable properties | Creator ZIP v1 |
+| **Stickers** | Portable images, SVG art, and GIFs | Creator ZIP v1 |
+| **Wallpapers** | Local images, GIFs, and video | Creator ZIP v1 |
+| **Effects** | Bounded rain, snow, and fog definitions | Creator ZIP v1 |
+| **Companions** | Images, GIFs, and sprite sheets with animation clips | Creator ZIP v1 |
+| **3D** | Local GLB, GLTF, and VRM models with bounded defaults | Creator ZIP v1 |
+| **Complete themes** | A desktop project and its packaged assets | Desktop Studio Export ZIP |
 | **Cursor packs** | Complete Windows cursor roles with animation and hotspots | Contract in development |
 | **Sound packs** | Individually configurable Windows event sounds | Contract in development |
-| **Companions & 3D** | Sprite companions and bounded GLB, GLTF, or VRM scenes | Contract in development |
 
 The public format only promises features that the shipping host implements and tests.
 Reserved capabilities remain clearly marked instead of silently becoming unstable APIs.
@@ -62,10 +65,11 @@ The workflow stays intentionally simple: design the experience, build it from po
 parts, validate the package, then preview it inside Desktop Studio. The validator and public
 contract catch unsafe or incompatible content before it reaches a user's desktop.
 
-## Your first widget
+## Your first package
 
-You only need **Node.js 22+** for the included validator. The widget itself is ordinary
-local HTML, CSS, and JavaScript with no build framework required.
+You only need **Node.js 22+** for the included validator and ZIP packager. They have no
+third-party runtime dependencies. A widget is ordinary local HTML, CSS, and JavaScript
+with no build framework required.
 
 ```bash
 git clone https://github.com/AnTheez/desktop-studio-creators.git
@@ -102,13 +106,40 @@ A minimal manifest stays readable:
 }
 ```
 
-Run the validator against any package folder:
+Validate a package folder, then create its ZIP outside that folder:
 
 ```bash
-node tools/validate-widget.mjs path/to/my-widget
+npm run validate -- examples/hello-widget
+npm run package -- examples/hello-widget hello-widget.zip
 ```
 
-Read the complete [DOM Widget format v1](docs/WIDGET-FORMAT.md) before publishing a package.
+For an image-only starting point, use [`examples/hello-sticker`](examples/hello-sticker):
+
+```bash
+npm run validate -- examples/hello-sticker
+npm run package -- examples/hello-sticker hello-sticker.zip
+```
+
+The packager validates first and never overwrites an existing ZIP. Read the
+[ZIP package guide](docs/ZIP-PACKAGES.md) for manifest fields, supported content, safety
+rules, and import behavior. The [DOM Widget format v1](docs/WIDGET-FORMAT.md) explains
+widget properties and lifecycle messages.
+
+## Import into Desktop Studio
+
+Use the app's ZIP import flow to open the guide and review the package preview before
+installation. Creator components appear in **Library → Imported** and can be added to a
+desktop project. They do not create a project by themselves.
+
+A complete theme ZIP comes from **Export** inside Desktop Studio. It imports as a project
+in **Projects** (shown as **Desktops** in the app), rather than as a single Library component.
+The Creator Kit packager creates component ZIPs; use app Export for complete themes.
+
+If a package ID already exists, the app offers **UseExisting** or **Copy**. UseExisting
+reuses the installed package; Copy keeps a separate copy. Neither choice replaces the
+existing package or its saved user data. Keep a stable namespaced `id` and increase the
+integer manifest `version` when releasing updates; a higher version does not authorize
+replacement during import.
 
 ## Settings without building a settings screen
 
@@ -173,10 +204,10 @@ Keeping the creator contract separate gives both sides a clean boundary:
 
 ## Project stage
 
-Desktop Studio and its Creator Kit are under active pre-1.0 development for Windows. DOM
-Widget v1 is the first published creator surface. Theme, wallpaper, cursor, sound, companion,
-3D, packaging, and Workshop contracts will be published only as their validators and runtime
-behavior become ready.
+Desktop Studio and its Creator Kit are under active pre-1.0 development for Windows.
+Creator ZIP v1 covers widgets, stickers, wallpapers, effects, companions, and 3D components.
+Complete theme ZIPs use the app's Export format. Cursor packs, sound packs, and Workshop
+publication remain outside this toolkit's current package contract.
 
 Ideas and improvements are welcome through issues and pull requests. Please read
 [`CONTRIBUTING.md`](CONTRIBUTING.md) before proposing a new permission, runtime, or package

@@ -1,0 +1,245 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Desktop Studio sprite companion manifest v1",
+  "allOf": [
+    {
+      "$ref": "common.schema.json#/$defs/metadata"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "companion"
+        },
+        "runtime": {
+          "const": "sprite"
+        },
+        "model": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "enum": [
+                "image",
+                "gif",
+                "spriteSheet"
+              ]
+            },
+            "asset": {
+              "$ref": "common.schema.json#/$defs/path"
+            }
+          },
+          "required": [
+            "type",
+            "asset"
+          ],
+          "additionalProperties": true
+        },
+        "defaultSize": {
+          "$ref": "common.schema.json#/$defs/size"
+        },
+        "animations": {
+          "type": "object",
+          "minProperties": 1,
+          "maxProperties": 128,
+          "required": [
+            "idle"
+          ],
+          "propertyNames": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128,
+                "pattern": "^[^\\u0000-\\u001f\\u007f]*\\S[^\\u0000-\\u001f\\u007f]*$"
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128,
+                "pattern": "^[^\\u0000-\\u001f\\u007f]*\\S[^\\u0000-\\u001f\\u007f]*$"
+              },
+              "duration": {
+                "type": "number",
+                "exclusiveMinimum": 0,
+                "maximum": 600
+              },
+              "loop": {
+                "type": "boolean"
+              },
+              "tracks": {
+                "type": "array",
+                "maxItems": 64,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "target": {
+                      "type": "string"
+                    },
+                    "property": {
+                      "type": "string"
+                    },
+                    "keyframes": {
+                      "type": "array",
+                      "maxItems": 1000,
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "time": {
+                            "type": "number"
+                          },
+                          "value": {},
+                          "easing": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "time",
+                          "value"
+                        ],
+                        "additionalProperties": true
+                      }
+                    }
+                  },
+                  "required": [
+                    "target",
+                    "property",
+                    "keyframes"
+                  ],
+                  "additionalProperties": true
+                }
+              },
+              "asset": {
+                "$ref": "common.schema.json#/$defs/path"
+              },
+              "frames": {
+                "type": "array",
+                "maxItems": 1000,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "y": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "width": {
+                      "type": "integer",
+                      "minimum": 1
+                    },
+                    "height": {
+                      "type": "integer",
+                      "minimum": 1
+                    },
+                    "duration": {
+                      "type": "number",
+                      "exclusiveMinimum": 0,
+                      "maximum": 60
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "width",
+                    "height",
+                    "duration"
+                  ],
+                  "additionalProperties": true
+                }
+              },
+              "metadata": {
+                "type": "object"
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "duration",
+              "loop",
+              "tracks"
+            ],
+            "additionalProperties": true
+          }
+        },
+        "permissions": {
+          "$ref": "common.schema.json#/$defs/permissions"
+        },
+        "defaults": {
+          "type": "object",
+          "properties": {
+            "character": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[^\\u0000-\\u001f\\u007f]*\\S[^\\u0000-\\u001f\\u007f]*$"
+            },
+            "behavior": {
+              "enum": [
+                "idle",
+                "followCursor",
+                "lookAtCursor",
+                "wander",
+                "hoverReaction",
+                "clickReaction",
+                "edgeBounce",
+                "stayOnTop"
+              ]
+            },
+            "animation": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S"
+            },
+            "followCursor": {
+              "type": "boolean"
+            },
+            "reactToClick": {
+              "type": "boolean"
+            },
+            "reactToHover": {
+              "type": "boolean"
+            },
+            "lookAtCursor": {
+              "type": "boolean"
+            },
+            "edgeBounce": {
+              "type": "boolean"
+            },
+            "stayOnTop": {
+              "type": "boolean"
+            },
+            "movementSpeed": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 20
+            },
+            "motionIntensity": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 4
+            }
+          },
+          "required": [
+            "character"
+          ],
+          "additionalProperties": true
+        }
+      },
+      "required": [
+        "runtime",
+        "model",
+        "defaultSize",
+        "animations"
+      ],
+      "additionalProperties": true
+    }
+  ]
+}

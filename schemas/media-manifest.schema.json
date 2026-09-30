@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Desktop Studio sticker, wallpaper and effect manifest v1",
+  "allOf": [
+    {
+      "$ref": "common.schema.json#/$defs/metadata"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "type": {
+          "enum": [
+            "sticker",
+            "wallpaper",
+            "effect"
+          ]
+        },
+        "entryPoint": {
+          "$ref": "common.schema.json#/$defs/path"
+        },
+        "source": {
+          "$ref": "common.schema.json#/$defs/path"
+        },
+        "contentType": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    {
+      "anyOf": [
+        {
+          "required": [
+            "entryPoint"
+          ]
+        },
+        {
+          "required": [
+            "source"
+          ]
+        }
+      ]
+    }
+  ]
+}

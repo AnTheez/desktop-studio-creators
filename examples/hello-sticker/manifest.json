@@ -1,0 +1,13 @@
+{
+  "formatVersion": 1,
+  "id": "antheez.hello-sticker",
+  "type": "sticker",
+  "name": "Hello Star",
+  "version": 1,
+  "entryPoint": "star.svg",
+  "preview": "star.svg",
+  "author": "Desktop Studio Creator Kit contributors",
+  "license": "MIT",
+  "description": "An original portable SVG sticker.",
+  "tags": ["star", "example"]
+}

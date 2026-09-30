@@ -1,0 +1,265 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Desktop Studio 3D manifest v1",
+  "allOf": [
+    {
+      "$ref": "common.schema.json#/$defs/metadata"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "type": {
+          "enum": [
+            "3d",
+            "threeD",
+            "threejs",
+            "vrm"
+          ]
+        },
+        "runtime": {
+          "enum": [
+            "threejs",
+            "vrm"
+          ]
+        },
+        "model": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "enum": [
+                "glb",
+                "gltf",
+                "vrm"
+              ]
+            },
+            "asset": {
+              "$ref": "common.schema.json#/$defs/path"
+            }
+          },
+          "required": [
+            "type",
+            "asset"
+          ],
+          "additionalProperties": true
+        },
+        "defaultSize": {
+          "type": "object",
+          "properties": {
+            "width": {
+              "type": "number",
+              "minimum": 64,
+              "maximum": 10000
+            },
+            "height": {
+              "type": "number",
+              "minimum": 64,
+              "maximum": 10000
+            }
+          },
+          "required": [
+            "width",
+            "height"
+          ],
+          "additionalProperties": true
+        },
+        "animations": {
+          "type": "array",
+          "maxItems": 256,
+          "items": {
+            "type": "string"
+          }
+        },
+        "expressions": {
+          "type": "array",
+          "maxItems": 256,
+          "items": {
+            "type": "string"
+          }
+        },
+        "defaults": {
+          "type": "object",
+          "properties": {
+            "transform": {
+              "type": "object",
+              "properties": {
+                "position": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "number"
+                    },
+                    "y": {
+                      "type": "number"
+                    },
+                    "z": {
+                      "type": "number"
+                    }
+                  },
+                  "additionalProperties": true
+                },
+                "rotation": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "number"
+                    },
+                    "y": {
+                      "type": "number"
+                    },
+                    "z": {
+                      "type": "number"
+                    }
+                  },
+                  "additionalProperties": true
+                },
+                "scale": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "number",
+                      "exclusiveMinimum": 0,
+                      "maximum": 100
+                    },
+                    "y": {
+                      "type": "number",
+                      "exclusiveMinimum": 0,
+                      "maximum": 100
+                    },
+                    "z": {
+                      "type": "number",
+                      "exclusiveMinimum": 0,
+                      "maximum": 100
+                    }
+                  },
+                  "additionalProperties": true
+                }
+              },
+              "additionalProperties": true
+            },
+            "camera": {
+              "type": "object",
+              "properties": {
+                "fov": {
+                  "type": "number",
+                  "minimum": 10,
+                  "maximum": 120
+                }
+              },
+              "additionalProperties": true
+            },
+            "lighting": {
+              "type": "object",
+              "properties": {
+                "environment": {
+                  "type": "boolean"
+                },
+                "shadows": {
+                  "type": "boolean"
+                }
+              },
+              "additionalProperties": true
+            },
+            "animation": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[^\\u0000-\\u001f\\u007f]*\\S[^\\u0000-\\u001f\\u007f]*$"
+            },
+            "loop": {
+              "type": "boolean"
+            },
+            "expressions": {
+              "type": "object",
+              "maxProperties": 256,
+              "propertyNames": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "\\S"
+              },
+              "additionalProperties": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              }
+            },
+            "interaction": {
+              "type": "object",
+              "properties": {
+                "lookAtCursor": {
+                  "type": "boolean"
+                },
+                "reactToClick": {
+                  "type": "boolean"
+                },
+                "reactToHover": {
+                  "type": "boolean"
+                },
+                "clickExpression": {
+                  "type": "string"
+                },
+                "hoverExpression": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": true
+            },
+            "physics": {
+              "type": "object",
+              "properties": {
+                "hair": {
+                  "type": "boolean"
+                },
+                "cloth": {
+                  "type": "boolean"
+                },
+                "secondaryMotion": {
+                  "type": "boolean"
+                }
+              },
+              "additionalProperties": true
+            },
+            "renderScale": {
+              "type": "number",
+              "minimum": 0.25,
+              "maximum": 2
+            }
+          },
+          "additionalProperties": true
+        }
+      },
+      "required": [
+        "runtime",
+        "model",
+        "defaultSize"
+      ],
+      "additionalProperties": true
+    },
+    {
+      "if": {
+        "properties": {
+          "model": {
+            "properties": {
+              "type": {
+                "const": "vrm"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "runtime": {
+            "const": "vrm"
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "runtime": {
+            "const": "threejs"
+          }
+        }
+      }
+    }
+  ]
+}
